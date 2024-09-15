@@ -1,0 +1,91 @@
+---
+import Layout from "../layouts/Auth.astro";
+import Link from "@/components/Link.astro";
+---
+
+<Layout title="Register" description="Lorem ipsum dolor sit amet">
+	<div class="container mt-5 min-h-screen">
+		<div class="row justify-content-center">
+			<div class="col-md-6 text-center">
+				<h4>Register</h4>
+				<div class="card text-start rounded-4">
+					<div class="card-body">
+						<form id="loginForm">
+							<div class="mb-3">
+								<label for="email" class="form-label"
+									>Email</label
+								>
+								<input
+									type="email"
+									class="form-control"
+									id="email"
+									name="email"
+									required
+								/>
+							</div>
+							<div class="mb-3">
+								<label for="username" class="form-label"
+									>Username</label
+								>
+								<input
+									type="text"
+									class="form-control"
+									id="username"
+									name="username"
+									required
+								/>
+							</div>
+							<div class="mb-3">
+								<label for="password" class="form-label"
+									>Password</label
+								>
+								<input
+									type="password"
+									class="form-control"
+									id="password"
+									name="password"
+									required
+								/>
+							</div>
+							<button type="submit" class="btn btn-primary w-100 btn-rounded"
+								>Register</button
+							>
+						</form>
+					</div>
+				</div>
+				<h6 class="mt-4">
+					<Link class="text-decoration-none" href="/login">Login</Link>
+				</h6>
+			</div>
+		</div>
+	</div>
+</Layout>
+
+<style>
+
+</style>
+
+<script>
+
+	$(document).ready(function () {
+		$("#loginForm").on("submit", function (e) {
+			e.preventDefault();
+			const username = $("#username").val();
+			const password = $("#password").val();
+
+			$.ajax({
+				url: "/api/login", // Replace with actual login endpoint
+				method: "POST",
+				data: { username, password },
+				success: function (response) {
+					console.log("Login successful", response);
+					// Handle successful login (e.g., redirect to dashboard)
+				},
+				error: function (xhr, status, error) {
+					console.error("Login failed", error);
+					// Handle login error (e.g., show error message)
+				},
+			});
+		});
+	});
+</script>

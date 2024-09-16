@@ -12,6 +12,6 @@ import icon from 'astro-icon';
 export default defineConfig({
   site: 'https://example.com',
   integrations: [mdx(), sitemap(), icon()],
-  output: 'server',
+  output: 'hybrid',
   adapter: netlify(),
 });

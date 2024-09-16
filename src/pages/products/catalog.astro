@@ -1,0 +1,84 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import fetchApi from "@/lib/strapi";
+import type Product from "@/interfaces/product";
+
+export const prerender = false;
+
+let products = await fetchApi<Product[]>({
+  endpoint: "products",
+  query: { populate: "*" },
+  wrappedByKey: "data",
+});
+---
+
+<Layout title="Shop Products" heroImage="/blog-placeholder-2.jpg">
+  <div class="mt-5">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      {
+        products.map((product) => {
+          let imageUrl =
+            product.attributes?.image?.data?.attributes?.url ||
+            "/blog_placeholder_5_b892ed830e.jpg";
+          imageUrl = imageUrl.includes("://")
+            ? imageUrl
+            : import.meta.env.STRAPI_URL + imageUrl;
+          return (
+            <div class="col">
+              <div class="card h-100 rounded-2 overflow-hidden">
+                <img
+                  src={imageUrl}
+                  class="card-img-top rounded-0"
+                  alt={product.attributes.title}
+                />
+                <div class="card-body">
+                  <h5 class="card-title">{product.attributes.title}</h5>
+                  <p class="card-text">
+                    ${Number(product.attributes.price).toFixed(2)}
+                  </p>
+                  <button
+                    class="btn btn-primary add-to-cart"
+                    data-id={product.id}
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .card-img-top {
+    min-height: 10rem;
+    object-fit: cover;
+  }
+</style>
+
+<script>
+  // @ts-nocheck
+  setTimeout(() => console.log(window.$), 3000);
+  $(document).ready(function () {
+    $(".add-to-cart").on("click", function () {
+      const productId = $(this).data("id");
+
+      $.ajax({
+        url: "/api/cart/add",
+        method: "POST",
+        data: { productId },
+        success: function (response) {
+          console.log(response);
+          alert("Product added to cart!");
+        },
+        error: function (xhr, status, error) {
+          console.error("Failed to add product to cart", error);
+          alert("Failed to add product to cart. Please try again.");
+        },
+      });
+    });
+  });
+</script>

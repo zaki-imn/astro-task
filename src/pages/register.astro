@@ -3,7 +3,7 @@ import Layout from "../layouts/Auth.astro";
 import Link from "@/components/Link.astro";
 ---
 
-<Layout title="Register" description="Lorem ipsum dolor sit amet">
+<Layout title="Register" description="Authorize">
 	<div class="container mt-5 min-h-screen">
 		<div class="row justify-content-center">
 			<div class="col-md-6 text-center">
@@ -67,25 +67,25 @@ import Link from "@/components/Link.astro";
 
 <script>
 
-	$(document).ready(function () {
-		$("#loginForm").on("submit", function (e) {
-			e.preventDefault();
-			const username = $("#username").val();
-			const password = $("#password").val();
+	// $(document).ready(function () {
+	// 	$("#loginForm").on("submit", function (e) {
+	// 		e.preventDefault();
+	// 		const username = $("#username").val();
+	// 		const password = $("#password").val();
 
-			$.ajax({
-				url: "/api/login", // Replace with actual login endpoint
-				method: "POST",
-				data: { username, password },
-				success: function (response) {
-					console.log("Login successful", response);
-					// Handle successful login (e.g., redirect to dashboard)
-				},
-				error: function (xhr, status, error) {
-					console.error("Login failed", error);
-					// Handle login error (e.g., show error message)
-				},
-			});
-		});
-	});
+	// 		$.ajax({
+	// 			url: "/api/login", // Replace with actual login endpoint
+	// 			method: "POST",
+	// 			data: { username, password },
+	// 			success: function (response) {
+	// 				console.log("Login successful", response);
+	// 				// Handle successful login (e.g., redirect to dashboard)
+	// 			},
+	// 			error: function (xhr, status, error) {
+	// 				console.error("Login failed", error);
+	// 				// Handle login error (e.g., show error message)
+	// 			},
+	// 		});
+	// 	});
+	// });
 </script>

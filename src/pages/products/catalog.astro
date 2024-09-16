@@ -17,12 +17,15 @@ let products = await fetchApi<Product[]>({
     <div class="row row-cols-1 row-cols-md-3 g-4">
       {
         products.map((product) => {
-          let imageUrl =
-            product.attributes?.image?.data?.attributes?.url ||
-            "/blog_placeholder_5_b892ed830e.jpg";
+          // Get product image or use default.
+          let defaultImage = Astro.url.origin + "/product.jpg";
+          let imageUrl = product.attributes?.image?.data?.attributes?.url;
+          imageUrl = imageUrl || defaultImage;
+          
           imageUrl = imageUrl.includes("://")
             ? imageUrl
             : import.meta.env.STRAPI_URL + imageUrl;
+
           return (
             <div class="col">
               <div class="card h-100 rounded-2 overflow-hidden">
